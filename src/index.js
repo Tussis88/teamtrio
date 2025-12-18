@@ -1,13 +1,25 @@
 import "./styles/styles.css";
+import { appLogic } from "./modules/logic";
 
-//test
-import { check } from "./modules/123check";
-import test_image from "./assets/images/test_image.jpg";
+const app = appLogic();
 
-console.log(check);
-document.body.textContent = check;
+const textOk = "4 black lotus\n2 dispel\n4 refurbished familiar"
+const textWrong1 = "4 black lotus\n25 dispel\n4 refurbished familiar"
+const textWrong2 = "4 black lotus\n2q dispel\n4 refurbished familiar"
 
-const imageTest = document.createElement("img");
-imageTest.src = test_image;
+console.log("textok")
+app.inputParser(textOk);
+console.log(app.getData());
+console.log(app.getErrors());
 
-document.body.appendChild(imageTest);
+
+// console.log("textWrong1")
+// app.inputParser(textWrong1);
+// console.log(app.getData());
+// console.log(app.getErrors());
+
+// console.log("textWrong2")
+// app.inputParser(textWrong2);
+// console.log(app.getData());
+// console.log(app.getErrors());
+
