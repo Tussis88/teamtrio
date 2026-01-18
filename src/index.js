@@ -1,14 +1,12 @@
 import "./styles/styles.css";
-import { appLogic } from "./modules/logic";
-
-const app = appLogic();
+import { deckValidator } from "./modules/logic";
 
 const textOk = "4 black lotus\n2 dispel\n4 refurbished familiar"
 const textWrong1 = "4 black lotus\n25 dispel\n4 refurbished familiar"
 const textWrong2 = "4 black lotus\n2q dispel\n4 refurbished familiar"
 
+const app = deckValidator(textOk);
 console.log("textok")
-app.inputParser(textOk);
 console.log(app.getData());
 console.log(app.getErrors());
 
