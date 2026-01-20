@@ -68,11 +68,13 @@ async function deckValidator(text) {
 
   const maxFourCheck = (deck) => {
     for (const [index, card] of deck) {
-      parsedOutput.push({ quantity: parsedInput[index].quantity, cardName: card.name });
-      // da vedere
       if (basicLands.includes(card.type_line)) {
         // da vedere.
       }
+      // controlla se esiste già. se  esiste aggiungi quantità else fai il push qui sotto
+      parsedOutput.push({ quantity: parsedInput[index].quantity, cardName: card.name });
+      // da vedere
+
     }
   };
 
