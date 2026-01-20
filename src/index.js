@@ -1,14 +1,14 @@
 import "./styles/styles.css";
 import { deckValidator } from "./modules/logic";
+import {okDeck, wrongQunatityDeck, wrongSyntaxDeck} from "../test/texttest";
 
-const textOk = "4 black lotus\n2 dispel\n4 refurbished familiar"
 const textWrong1 = "4 black lotus\n25 dispel\n4 refurbished familiar"
 const textWrong2 = "4 black lotus\n2q dispel\n4 refurbished familiar"
 
-const app = deckValidator(textOk);
+const app = await deckValidator(wrongSyntaxDeck);
 console.log("textok")
-console.log(app.getData());
-console.log(app.getErrors());
+console.log(app.errors);
+console.log(app.cardList);
 
 
 // console.log("textWrong1")

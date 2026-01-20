@@ -57,17 +57,17 @@ async function deckValidator(text) {
   }
 
   inputParser();
-  if (errors.length > 0) return { errors: errors, data: null };
+  if (errors.length > 0) return { errors: errors, cardList: null };
 
   quantityCheck();
-  if (errors.length > 0) return { errors: errors, data: null };
+  if (errors.length > 0) return { errors: errors, cardsList: null };
 
   const deckData = await existCheck()
   console.log(deckData);
-  if (errors.length > 0) return { errors: errors, data: null };
+  if (errors.length > 0) return { errors: errors, cardsList: null };
 
 
-  return { errors: errors, data: cardList }
+  return { errors: errors, cardsList: deckData }
 }
 
 export { deckValidator }
