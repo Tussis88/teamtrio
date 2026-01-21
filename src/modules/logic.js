@@ -66,17 +66,30 @@ async function deckValidator(text) {
     });
   }
 
-  const maxFourCheck = (deck) => {
-    for (const [index, card] of deck) {
-      if (basicLands.includes(card.type_line)) {
-        // da vedere.
-      }
-      // controlla se esiste già. se  esiste aggiungi quantità else fai il push qui sotto
-      parsedOutput.push({ quantity: parsedInput[index].quantity, cardName: card.name });
-      // da vedere
+  const deckDataParser = (deck) => {
 
+    for (const [index, card] of deck.entries()) {
+      if (basicLands.includes(card.type_line)) {
+        continue;
+      }
+      const currentCardName = card.name;
+      const currentQuantity = parsedInput[index].quantity;
+
+      const existingCard = parsedOutput.find(item => item.cardName === currentCardName);
+
+      if (existingCard) {
+        existingCard.quantity += currentQuantity;
+      } else {
+        parsedOutput.push({ quantity: currentQuantity, cardName: currentCardName });
+      }
     }
   };
+
+  const maxCopiesCheck = () => {
+    parsedOutput.forEach(line => {
+      if (line.quantity > 4) errors.push(`❌ Ci sono ${line.quantity} copie di ${line.cardName}`);
+    });
+  }
 
   inputParser();
   if (errors.length > 0) return { errors: errors, cardList: null };
@@ -85,10 +98,13 @@ async function deckValidator(text) {
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
   const deckData = await existCheck()
-  console.log(deckData);
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
-  legalityCheck(deckData)
+  legalityCheck(deckData);
+  if (errors.length > 0) return { errors: errors, cardsList: null };
+
+  deckDataParser(deckData);
+  maxCopiesCheck();
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
   return { errors: errors, cardsList: parsedOutput }

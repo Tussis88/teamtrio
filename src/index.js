@@ -3,6 +3,6 @@ import { deckValidator } from "./modules/logic";
 import {okDeck, wrongQunatityDeck, wrongSyntaxDeck, nonExistentCardDeck, illegalDeck, landsDeck} from "../test/texttest";
 
 
-const app = await deckValidator(landsDeck);
+const app = await deckValidator(okDeck);
 console.log(app.errors);
-console.log(app.cardList);
+console.log(app.cardsList);
