@@ -18,4 +18,28 @@ async function scryfallFetch(fetchedInput) {
   return await response.json();
 }
 
-export { scryfallFetch }
+
+function inputParser(text){
+  const lines = text.trim().split("\n");
+
+  const parsedText = [];
+  const errors = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i] === "") continue;
+    const match = lines[i].match(/^(1?[1-9]|10|20)\s{1,2}(.+)$/);
+
+    if (match) {
+      parsedText.push({
+        quantity: parseInt(match[1]),
+        cardName: match[2].trim()
+      });
+    } else {
+      errors.push(`❌ Errore in questa riga:  ${lines[i]}`);
+    }
+  }
+
+  return {parsedText, errors}
+}
+
+export { scryfallFetch, inputParser }
