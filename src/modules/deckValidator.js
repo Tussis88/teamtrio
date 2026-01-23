@@ -3,26 +3,23 @@ import {basicLands} from "../assets/basicLands";
 // deckValidator() controlla i singoli mazzi. Poi creerò una seconda funzione che checkerà i 3 mazzi con deckValidator
 // La funzione trioValidator creerà un set con i 3 output di deckValidator e checkerà la lunghezza del set. Se il sest è lungo tanto quanto la somma della lunghezza dei 3 array allora non ci sono doppioni. Altrimenti significa che c'erano doppioni.
 
-async function deckValidator(text) {
+async function deckValidator(inputText) {
   const errors = [];
-  const parsedInput = [];
-  const parsedOutput = [];
+  const userCardList = [];
+  const noBasicsList = [];
 
   const deckDataParser = (deck) => {
-
     for (const [index, card] of deck.entries()) {
       if (basicLands.includes(card.type_line)) {
         continue;
       }
       const currentCardName = card.name;
-      const currentQuantity = parsedInput[index].quantity;
-
-      const existingCard = parsedOutput.find(item => item.cardName === currentCardName);
-
+      const currentQuantity = userCardList[index].quantity;
+      const existingCard = noBasicsList.find(item => item.cardName === currentCardName);
       if (existingCard) {
         existingCard.quantity += currentQuantity;
       } else {
-        parsedOutput.push({ quantity: currentQuantity, cardName: currentCardName });
+        noBasicsList.push({ quantity: currentQuantity, cardName: currentCardName });
       }
     }
   };
@@ -30,12 +27,12 @@ async function deckValidator(text) {
   const inputCheck = (textInput) => {
     const parsedResult = inputParser(textInput);
 
-    parsedInput.push(...parsedResult.parsedText);
+    userCardList.push(...parsedResult.parsedText);
     errors.push(...parsedResult.errors);
   }
 
   const quantityCheck = () => {
-    const total = parsedInput.reduce((accumulator, line) => {
+    const total = userCardList.reduce((accumulator, line) => {
       return line.quantity + accumulator;
     }, 0);
 
@@ -46,7 +43,7 @@ async function deckValidator(text) {
 
   const existCheck = async () => {
     try {
-      const fetchedData = await scryfallFetch(parsedInput);
+      const fetchedData = await scryfallFetch(userCardList);
       if (fetchedData.not_found && fetchedData.not_found.length > 0) {
         fetchedData.not_found.forEach((card) => {
           errors.push("❌ carta non presente nel database di scryfall: " + card.name);
@@ -67,28 +64,28 @@ async function deckValidator(text) {
   }
 
   const maxCopiesCheck = () => {
-    parsedOutput.forEach(line => {
+    noBasicsList.forEach(line => {
       if (line.quantity > 4) errors.push(`❌ Ci sono ${line.quantity} copie di ${line.cardName}`);
     });
   }
 
-  inputCheck(text);
+  inputCheck(inputText);
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
   quantityCheck();
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
-  const deckData = await existCheck()
+  const scryfallList = await existCheck()
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
-  legalityCheck(deckData);
+  legalityCheck(scryfallList);
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
-  deckDataParser(deckData);
+  deckDataParser(scryfallList);
   maxCopiesCheck();
   if (errors.length > 0) return { errors: errors, cardsList: null };
 
-  return { errors: errors, cardsList: parsedOutput }
+  return { errors: errors, cardsList: noBasicsList }
 }
 
 export { deckValidator }

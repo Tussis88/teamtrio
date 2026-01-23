@@ -1,8 +1,8 @@
 import "./styles/styles.css";
-import { deckValidator } from "./modules/logic";
+import { deckValidator } from "./modules/deckValidator";
 import {okDeck, wrongQunatityDeck, wrongSyntaxDeck, nonExistentCardDeck, illegalDeck, landsDeck} from "../test/texttest";
 
 
-const app = await deckValidator(okDeck);
-console.log(app.errors);
-console.log(app.cardsList);
+const app = await deckValidator(nonExistentCardDeck);
+console.table(app.errors);
+console.table(app.cardsList);
