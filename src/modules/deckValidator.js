@@ -51,7 +51,7 @@ async function deckValidator(inputText) {
       }
       return fetchedData.data;
     } catch (error) {
-      errors.push(error);
+      errors.push("❌ Errore con la connessione a Scryfall: " + error.message);
     }
   }
 

@@ -10,7 +10,7 @@ async function scryfallFetch(fetchedInput) {
   });
   const response = await fetch(cardRequest);
   if (!response.ok) {
-    throw new Error("❌ Errore con la connessione a Scryfall: " + response.status);
+    throw new Error(response.status);
   }
   return await response.json();
 }

@@ -17,6 +17,13 @@ async function teamValidator(deck1, deck2, deck3) {
 
   // da rivedere sta parte.. 
   // Provare a fare un ciclo che controlla tutti i singoli array e se trova un doppione pusha quell'elemento in errors nelle posizioni corrette con la solita struttura [[][][]]
+  for (let i = 0; i < decks.length; i++) {
+    for (let j = i + 1; j < decks.length; j++) {
+      console.log(i, j);
+    }
+  }
+}
+/*
   const cardSet = new Set();
   const cardArray = [];
   results.forEach(result => {
@@ -27,6 +34,5 @@ async function teamValidator(deck1, deck2, deck3) {
   });
   console.log(...results);
   if (cardArray.length === cardSet.size) console.log("valid");
-}
-
+*/
 export { teamValidator };
