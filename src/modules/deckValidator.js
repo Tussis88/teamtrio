@@ -1,7 +1,5 @@
 import { scryfallFetch, inputParser } from "./utilities.js";
 import {basicLands} from "../assets/basicLands";
-// deckValidator() controlla i singoli mazzi. Poi creerò una seconda funzione che checkerà i 3 mazzi con deckValidator
-// La funzione trioValidator creerà un set con i 3 output di deckValidator e checkerà la lunghezza del set. Se il sest è lungo tanto quanto la somma della lunghezza dei 3 array allora non ci sono doppioni. Altrimenti significa che c'erano doppioni.
 
 async function deckValidator(inputText) {
   const errors = [];
