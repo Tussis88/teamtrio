@@ -12,6 +12,9 @@ function pageRenderer() {
   const form = document.createElement("form");
   container.appendChild(form);
 
+  const messageDiv = document.createElement("div");
+  container.appendChild(messageDiv);
+
   const areas = []
   for (let i = 1; i < 4; i++) {
     const label = document.createElement("label");
@@ -30,23 +33,25 @@ function pageRenderer() {
   form.appendChild(button);
   button.addEventListener("click", (e) => {
     e.preventDefault();
-    const deck1 = areas[0].value;
-    const deck2 = areas[1].value;
-    const deck3 = areas[2].value;
-    //inserire qui errorRender con il risultato di teamValidator.. una roba tipo errorRenderer(teamValidator(deck1, deck2, deck3), messageDiv). Solo con l'await, boh.
+    const decks = areas.map(area => area.value);
+    teamValidator(...decks).then(result => errorRenderer(result, messageDiv));
     messageDiv.textContent = "attendi...";
   });
-
-  const messageDiv = document.createElement("div");
-  container.appendChild(messageDiv);
 }
 
 function errorRenderer(result, messageDiv) {
   if (result === null) {
+    messageDiv.className = "noerror";
     messageDiv.textContent = "I mazzi sono corretti!";
     return;
   }
-  // creare i 3 campi per gli errori di ogni singolo mazzo
+  messageDiv.textContent = "";
+  messageDiv.className = "error";
+  for (const deck of result) {
+    const errorBlock = document.createElement("div");
+    errorBlock.textContent = deck.join("\n");
+    messageDiv.appendChild(errorBlock);
+  }
 }
 
 export { pageRenderer };
