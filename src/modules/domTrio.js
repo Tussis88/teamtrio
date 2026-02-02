@@ -16,20 +16,29 @@ function pageRenderer() {
   container.appendChild(messageDiv);
 
   const areas = []
+  const areasContainer = document.createElement("div");
+  areasContainer.classList.add("decksContainer");
+  form.appendChild(areasContainer);
+
   for (let i = 1; i < 4; i++) {
+    const deckDiv = document.createElement("div");
+    deckDiv.classList.add("areaContainer");
+    areasContainer.appendChild(deckDiv);
+
     const label = document.createElement("label");
     label.innerText = "Mazzo " + i;
     label.htmlFor = "mazzo " + i;
-    form.appendChild(label);
+    deckDiv.appendChild(label);
 
     const textarea = document.createElement("textarea");
     textarea.id = "mazzo " + i;
-    form.appendChild(textarea);
+    deckDiv.appendChild(textarea);
     areas.push(textarea);
   }
 
   const button = document.createElement("button");
   button.innerText = "Controlla";
+  button.id = "controllaButton";
   form.appendChild(button);
   button.addEventListener("click", (e) => {
     e.preventDefault();

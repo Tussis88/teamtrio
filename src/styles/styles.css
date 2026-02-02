@@ -1,9 +1,14 @@
 :root {
     --text: #333339;
+    --errorBackground: #ebbcba;
+    --errorText: #eb6f92;
+    --okBackground: #9ccfd8;
+    --okText: #31748f;
 }
 
 body {
     color: var(--text);
+    font-family: monospace;
 }
 
 .container {
@@ -12,7 +17,78 @@ body {
     max-width: 100ch;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.decksContainer {
+    display: flex;
+    gap: 1rem;
+    align-content: center;
+}
+
+.areaContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.areaContainer label {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.areaContainer textarea {
+    width: 12rem;
+    min-height: 20rem;
+    resize: none;
+}
+
+#controllaButton {
+    margin: 1rem;
+    padding: 8px;
+    font-size: 1.1rem;
+    border: 2px solid var(--text);
+    border-radius: 4px;
+    color: var(--text);
+    background-color: transparent;
+    &:hover {
+        color: white;
+        background-color: var(--text);
+        cursor: pointer;
+    }
+}
+
 h1 {
     text-align: center;
     font-size: 4rem;
+}
+
+.error, .noerror {
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.error {
+    display: flex;
+    gap: 1rem;
+}
+
+.error > div {
+    flex: 1;
+    background-color: var(--errorBackground);
+    border: 1px solid var(--errorText);
+    padding: 1rem;
+    border-radius: 4px;
+    white-space: pre-line;
+}
+
+.noerror {
+    background-color: var(--okBackground);
+    border: 1px solid var(--okText);
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
 }
