@@ -1,5 +1,5 @@
 import { scryfallFetch, inputParser } from "./utilities.js";
-import {basicLands} from "../assets/basicLands";
+import { basicLands } from "../assets/basicLands";
 
 async function deckValidator(inputText) {
   const errors = [];
@@ -34,7 +34,7 @@ async function deckValidator(inputText) {
       return line.quantity + accumulator;
     }, 0);
 
-    if (total !== 75) {
+    if (total < 60 || total > 75) {
       errors.push(`❌ Questo mazzo ha ${total} carte`);
     }
   }
