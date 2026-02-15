@@ -34,8 +34,8 @@ async function deckValidator(inputText) {
       return line.quantity + accumulator;
     }, 0);
 
-    if (total < 60 || total > 75) {
-      errors.push(`❌ Questo mazzo ha ${total} carte`);
+    if (total < 60) {
+      errors.push(`❌ Questa lista ha ${total} carte`);
     }
   }
 
