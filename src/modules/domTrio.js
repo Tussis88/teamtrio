@@ -1,4 +1,4 @@
-import {teamValidator} from "./teamValidator";
+import { teamValidator } from "./teamValidator";
 
 function pageRenderer() {
   const container = document.createElement("div");
